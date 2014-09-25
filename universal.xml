@@ -1,0 +1,28 @@
+<root>
+	<attributes>
+		<attribute>A</attribute>
+		<attribute>B</attribute>
+		<attribute>C</attribute>
+		<attribute>D</attribute>
+	</attributes>
+	<fds>
+		<fd>
+			<left>
+				<attribute>A</attribute>
+				<attribute>B</attribute>
+			</left>
+			<right>
+				<attribute>C</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>C</attribute>
+			</left>
+			<right>
+				<attribute>B</attribute>
+				<attribute>D</attribute>
+			</right>
+		</fd>
+	</fds>
+</root>
