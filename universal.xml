@@ -4,6 +4,20 @@
 		<attribute>B</attribute>
 		<attribute>C</attribute>
 		<attribute>D</attribute>
+		<attribute>E</attribute>
+		<attribute>F</attribute>
+		<attribute>G</attribute>
+		<attribute>I</attribute>
+		<attribute>J</attribute>
+		<attribute>K</attribute>
+		<attribute>L</attribute>
+		<attribute>M</attribute>
+		<attribute>N</attribute>
+		<attribute>P</attribute>
+		<attribute>Q</attribute>
+		<attribute>R</attribute>
+		<attribute>S</attribute>
+		<attribute>T</attribute>
 	</attributes>
 	<fds>
 		<fd>
@@ -17,11 +31,94 @@
 		</fd>
 		<fd>
 			<left>
-				<attribute>C</attribute>
+				<attribute>A</attribute>
 			</left>
 			<right>
-				<attribute>B</attribute>
 				<attribute>D</attribute>
+				<attribute>E</attribute>
+				<attribute>F</attribute>
+				<attribute>G</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>E</attribute>
+			</left>
+			<right>
+				<attribute>G</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>F</attribute>
+			</left>
+			<right>
+				<attribute>D</attribute>
+				<attribute>J</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>G</attribute>
+			</left>
+			<right>
+				<attribute>D</attribute>
+				<attribute>I</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>D</attribute>
+				<attribute>M</attribute>
+			</left>
+			<right>
+				<attribute>N</attribute>
+				<attribute>P</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>D</attribute>
+			</left>
+			<right>
+				<attribute>M</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>L</attribute>
+			</left>
+			<right>
+				<attribute>D</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>P</attribute>
+				<attribute>R</attribute>
+			</left>
+			<right>
+				<attribute>S</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>P</attribute>
+				<attribute>Q</attribute>
+				<attribute>R</attribute>
+			</left>
+			<right>
+				<attribute>S</attribute>
+				<attribute>T</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>D</attribute>
+			</left>
+			<right>
+				<attribute>K</attribute>
+				<attribute>L</attribute>
 			</right>
 		</fd>
 	</fds>
