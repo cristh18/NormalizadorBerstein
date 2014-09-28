@@ -1,12 +1,16 @@
 package com.normalizador.util.test;
 
 import static org.junit.Assert.*;
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.normalizador.entities.Dominio;
+import com.normalizador.util.XmlParser;
 
 public class XmlParserTest {
 
@@ -28,7 +32,19 @@ public class XmlParserTest {
 
 	@Test
 	public void testReadFile() {
-		fail("Not yet implemented");
+		// Arrange
+		String filePath = "universal.xml";
+		XmlParser xmlParser = new XmlParser();
+		
+		// Act
+		Dominio result = xmlParser.readFile(filePath);
+		
+		// Assert
+		assertNotNull(result);
+		assertNotNull(result.getAtributos());
+		assertNotNull(result.getDependencias());
+		assertTrue(result.getAtributos().size() > 0);
+		assertTrue(result.getDependencias().size() > 0);
 	}
 
 }
