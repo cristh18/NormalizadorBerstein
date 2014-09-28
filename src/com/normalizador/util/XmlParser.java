@@ -102,8 +102,6 @@ public class XmlParser implements IFileParser {
 
 					String d = campo.getTextTrim();
 
-					System.out.println(d);
-
 					// Se inicaliza y se setean datos al objeto atributo
 					atributo = new Atributo();
 					atributo.setValor(d);
