@@ -43,117 +43,239 @@ public class NormalizadorBernstein implements INormalizador {
 	}
 
 	@Override
-	public boolean cierreDescriptor(DependenciaFuncional descriptor,
-			List<DependenciaFuncional> conjuntoDependencias) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public Dominio calcularDependenciasElementales(Dominio dominio) {
-		int contador = 0;
-		l1 = new ArrayList<DependenciaFuncional>();
 		
+		System.out.println();
+		System.out.print("Paso 1: Calcular dependencias elementales");
+		System.out.println();
+		
+		l1 = new ArrayList<DependenciaFuncional>();
 		l1Temp = new ArrayList<DependenciaFuncional>();
 		
 		for (DependenciaFuncional dependenciaFuncional : dominio.getDependencias()) {
-			for (Atributo implicados : dependenciaFuncional.getImplicados()) {
-				if (implicados.getValor().length() == 1) {
-					contador++;
-					l1.add(dependenciaFuncional);
-				}else {
-					l1Temp.add(dependenciaFuncional);
-				}
+			if (dependenciaFuncional.getImplicados().size() == 1) {
+				l1.add(dependenciaFuncional);
+			}
+			else{
+				l1Temp.add(dependenciaFuncional);
 			}
 		}
-		System.out.println(contador);
 		
 		l1TempAxiomatizada = this.axiomaDescomposicion(l1Temp);
 		
 		this.agregarDependenciasL1(l1TempAxiomatizada);
 		dominio.setDependencias(l1);
-		
-//		System.out.println("=======================L1=======================");
-//		for (DependenciaFuncional dependenciaFuncional : l1) {
-//			
-//			
-//			System.out.println();
-//
-//			for (Atributo determinante : dependenciaFuncional
-//					.getDeterminantes()) {
-//				System.out.print(determinante.getValor());
-//			}
-//
-//			System.out.print("-->");
-//
-//			for (Atributo implicado : dependenciaFuncional.getImplicados()) {
-//				System.out.println(implicado.getValor());
-//			}
-//			
-//		}
-//		
-//		System.out.println("=======================L1Temp=======================");
-//		for (DependenciaFuncional dependenciaFuncional : l1Temp) {
-//			
-//			
-//			System.out.println();
-//
-//			for (Atributo determinante : dependenciaFuncional
-//					.getDeterminantes()) {
-//				System.out.print(determinante.getValor());
-//			}
-//
-//			System.out.print("-->");
-//
-//			for (Atributo implicado : dependenciaFuncional.getImplicados()) {
-//				System.out.println(implicado.getValor());
-//			}
-//			
-//		}
-		
 		return dominio;
 	}
 
 	@Override
 	public Dominio eliminarElementosExtranios(Dominio dominio) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		System.out.println();
+		System.out.print("Paso 2: Eliminar atributos extraños");
+		System.out.println();
+		
+		for (int i = 0; i < dominio.getDependencias().size(); i++) {
+			if(dominio.getDependencias().get(i).getDeterminantes().size() > 1){
+				
+				List<Atributo> listAttributes = new ArrayList<Atributo>();
+				listAttributes.addAll(dominio.getDependencias().get(i).getDeterminantes());
+				
+				for (int j = 0; j < listAttributes.size(); j++) {
+					List<Atributo> listTestAttributes = new ArrayList<Atributo>();
+					listTestAttributes.addAll(listAttributes);
+					listTestAttributes.remove(j);
+					
+					List<Atributo> listAtributosClausura = clausura(listTestAttributes);
+					
+					if(listAtributosClausura.containsAll(dominio.getDependencias().get(i).getImplicados()))
+					{
+						DependenciaFuncional df = new DependenciaFuncional();
+						df.setDeterminantes(listTestAttributes);
+						df.setImplicados(dominio.getDependencias().get(i).getImplicados());
+						dominio.getDependencias().set(i, df);
+						break;
+					}
+				}
+			}
+		}
+	
+		return dominio;
 	}
+	
+	@Override
+	public List<Atributo> clausura(List<Atributo> atributos)
+	{
+		List<Atributo> listAtributosClausura = new ArrayList<Atributo>();
+		listAtributosClausura.addAll(atributos);
 
+		List<DependenciaFuncional> listDependenciasFuncionales = new ArrayList<DependenciaFuncional>();
+		listDependenciasFuncionales.addAll(dominio.getDependencias());
+	
+		List<DependenciaFuncional> listDependenciasEliminar = new ArrayList<DependenciaFuncional>();
+		
+		int cantidadInicial = 0, cantidadFinal = 0;
+		
+		do {
+			//Cantidad atributos antes de iniciar el ciclo
+			cantidadInicial = listAtributosClausura.size();
+			
+			for (DependenciaFuncional dependenciaFuncional : listDependenciasFuncionales) {
+				if(listAtributosClausura.containsAll(dependenciaFuncional.getDeterminantes()))
+				{
+					listAtributosClausura.addAll(dependenciaFuncional.getImplicados());
+					listDependenciasEliminar.add(dependenciaFuncional);
+				}
+			}
+			
+			//Cantidad atributos al finalizar un ciclo
+			cantidadFinal = listAtributosClausura.size();
+			
+			//Eliminar de la lista de dependencias funcionales las que sus determinantes ya fueron adicionados a la lista de atributos
+			listDependenciasFuncionales.removeAll(listDependenciasEliminar);
+			//Vaciar lista dependencias funcionales a eliminar
+			listDependenciasEliminar.clear();
+			
+			if(listAtributosClausura.size() == dominio.getAtributos().size())
+				break;
+			
+		} while (cantidadInicial != cantidadFinal /*|| listDependenciasFuncionales.size() > 0 || */);
+
+		return listAtributosClausura;
+	}
+	
+	@Override
+	public List<Atributo> clausura(List<Atributo> atributos, List<DependenciaFuncional> listDFTest)
+	{
+		List<Atributo> listAtributosClausura = new ArrayList<Atributo>();
+		listAtributosClausura.addAll(atributos);
+
+		List<DependenciaFuncional> listDependenciasFuncionales = new ArrayList<DependenciaFuncional>();
+		listDependenciasFuncionales.addAll(listDFTest);
+	
+		List<DependenciaFuncional> listDependenciasEliminar = new ArrayList<DependenciaFuncional>();
+		
+		int cantidadInicial = 0, cantidadFinal = 0;
+		
+		do {
+			//Cantidad atributos antes de iniciar el ciclo
+			cantidadInicial = listAtributosClausura.size();
+			
+			for (DependenciaFuncional dependenciaFuncional : listDependenciasFuncionales) {
+				if(listAtributosClausura.containsAll(dependenciaFuncional.getDeterminantes()))
+				{
+					listAtributosClausura.addAll(dependenciaFuncional.getImplicados());
+					listDependenciasEliminar.add(dependenciaFuncional);
+				}
+			}
+			
+			//Cantidad atributos al finalizar un ciclo
+			cantidadFinal = listAtributosClausura.size();
+			
+			//Eliminar de la lista de dependencias funcionales las que sus determinantes ya fueron adicionados a la lista de atributos
+			listDependenciasFuncionales.removeAll(listDependenciasEliminar);
+			//Vaciar lista dependencias funcionales a eliminar
+			listDependenciasEliminar.clear();
+			
+			if(listAtributosClausura.size() == dominio.getAtributos().size())
+				break;
+			
+		} while (cantidadInicial != cantidadFinal /*|| listDependenciasFuncionales.size() > 0 || */);
+
+		return listAtributosClausura;
+	}
+	
 	@Override
 	public Dominio eliminarDependenciasInnecesarias(Dominio dominio) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println();
+		System.out.print("Paso 3: Eliminar dependencias innecesarias");
+		System.out.println();
+		
+		boolean flag = true;
+		while(flag)
+		{
+			List<DependenciaFuncional> listaDFActualizadas = new ArrayList<DependenciaFuncional>(); 
+			listaDFActualizadas.addAll(dominio.getDependencias()); 
+			int i = 0;
+			for (i = 0; i < listaDFActualizadas.size(); i++) {
+				List<DependenciaFuncional> listdf = new ArrayList<DependenciaFuncional>();
+				listdf.addAll(listaDFActualizadas);
+				listdf.remove(i);
+				
+				List<Atributo> listAtributosClausura = clausura(listaDFActualizadas.get(i).getDeterminantes(), listdf);
+				
+				if(listAtributosClausura.containsAll(dominio.getDependencias().get(i).getImplicados()))
+				{
+					dominio.getDependencias().remove(i);
+					break;
+				}				
+			}
+			
+			if(i == listaDFActualizadas.size())
+				flag = false;
+		}
+		
+		return dominio;
 	}
 
 	@Override
 	public Dominio agruparPorLlave(Dominio dominio) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println();
+		System.out.print("Paso 4: Agrupar dependencias por llave");
+		System.out.println();
+		
+		List<DependenciaFuncional> listaDFFinal = new ArrayList<DependenciaFuncional>();
+				
+		for (int i = 0; i < dominio.getDependencias().size(); i++) {
+			DependenciaFuncional obj = new DependenciaFuncional();
+			List<Atributo> listAtributosDeterminantes = new ArrayList<Atributo>();
+			List<Atributo> listAtributosImplicados = new ArrayList<Atributo>();
+			
+			listAtributosDeterminantes.addAll(dominio.getDependencias().get(i).getDeterminantes());
+			listAtributosImplicados.addAll(dominio.getDependencias().get(i).getImplicados());
+			
+			for (int j = 0; j < dominio.getDependencias().size(); j++) {
+				if(i==j)
+					continue;
+				if(dominio.getDependencias().get(i).getDeterminantes().equals(dominio.getDependencias().get(j).getDeterminantes())){
+					listAtributosImplicados.addAll(dominio.getDependencias().get(j).getImplicados());
+					
+				}
+			}
+			
+			obj.setDeterminantes(listAtributosDeterminantes);
+			obj.setImplicados(listAtributosImplicados);
+			
+			boolean flagRepetidos = false;
+			for (DependenciaFuncional df : listaDFFinal) {
+				if(df.getDeterminantes().equals(obj.getDeterminantes())){
+					flagRepetidos = true;
+					break;
+				}
+			}
+			
+			if(!flagRepetidos)
+				listaDFFinal.add(obj);
+		}
+		
+		dominio.setDependencias(listaDFFinal);
+		return dominio;
 	}
 	
 	/**
 	 * 
 	 * @param dependenciasNoSimples
 	 */
-	public List<DependenciaFuncional> axiomaDescomposicion(
-			List<DependenciaFuncional> dependenciasNoSimples) {
+	private List<DependenciaFuncional> axiomaDescomposicion(List<DependenciaFuncional> dependenciasNoSimples) {
 		List<DependenciaFuncional> l1TempNew = new ArrayList<DependenciaFuncional>();
-		List<Atributo> atributosL1 = new ArrayList<Atributo>();
 		for (DependenciaFuncional dependenciaFuncional : dependenciasNoSimples) {
 			for (Atributo aImplicado : dependenciaFuncional.getImplicados()) {
-				for (int i = 0; i < aImplicado.getValor().length(); i++) {
-					DependenciaFuncional deFuncional = new DependenciaFuncional();
-					deFuncional.setDeterminantes(dependenciaFuncional
-							.getDeterminantes());
-					Atributo atributoTemp = new Atributo();
-					atributoTemp.setValor(String.valueOf(aImplicado.getValor()
-							.charAt(i)));
-					atributosL1 = new ArrayList<Atributo>();
-					atributosL1.add(atributoTemp);
-					deFuncional.setImplicados(atributosL1);
-					l1TempNew.add(deFuncional);
-				}
+				DependenciaFuncional newDF = new DependenciaFuncional();
+				newDF.setDeterminantes(dependenciaFuncional.getDeterminantes());
+				List<Atributo> listAtr = new ArrayList<Atributo>();
+				listAtr.add(aImplicado);
+				newDF.setImplicados((listAtr));
+				l1TempNew.add(newDF);
 			}
 		}
 		return l1TempNew;
@@ -164,24 +286,27 @@ public class NormalizadorBernstein implements INormalizador {
 	 * @param dependenciasAxiomatizadas
 	 * @return
 	 */
-	public List<DependenciaFuncional> agregarDependenciasL1(
-			List<DependenciaFuncional> dependenciasAxiomatizadas) {
+	private List<DependenciaFuncional> agregarDependenciasL1(List<DependenciaFuncional> dependenciasAxiomatizadas) {
 		for (DependenciaFuncional dependenciaFuncional : dependenciasAxiomatizadas) {
 			l1.add(dependenciaFuncional);
 		}
 		return l1;
 	}
 	
-	
 	/**
 	 * 
 	 */
 	public void imprimirAtributos() {
 
+		StringBuilder sb = new StringBuilder();
+		sb.append("A: {");
 		for (Atributo atributo : dominio.getAtributos()) {
-			System.out.println(atributo.getValor());
+			sb.append(atributo.getValor());
+			sb.append(", ");
 		}
-
+		String cadena = sb.toString();
+		String sub = cadena.substring(0, cadena.lastIndexOf(", ")) + "}";
+		System.out.println(sub);
 	}
 
 	/**
@@ -189,22 +314,25 @@ public class NormalizadorBernstein implements INormalizador {
 	 */
 	public void imprimirDependenciasFuncionales() {
 
-		for (DependenciaFuncional dependenciaFuncional : dominio
-				.getDependencias()) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("FD: {");
+		for (DependenciaFuncional dependenciaFuncional : dominio.getDependencias()) {
 
-			System.out.println();
-
-			for (Atributo determinante : dependenciaFuncional
-					.getDeterminantes()) {
-				System.out.print(determinante.getValor());
+			for (Atributo determinante : dependenciaFuncional.getDeterminantes()) {
+				sb.append(determinante.getValor());
 			}
 
-			System.out.print("-->");
+			sb.append("-->");
 
 			for (Atributo implicado : dependenciaFuncional.getImplicados()) {
-				System.out.println(implicado.getValor());
+				sb.append(implicado.getValor());
 			}
+			
+			sb.append(", ");
 		}
+		String cadena = sb.toString();
+		String sub = cadena.substring(0, cadena.lastIndexOf(", ")) + "}";
+		System.out.println(sub);
 	}
 
 	/**
@@ -214,14 +342,20 @@ public class NormalizadorBernstein implements INormalizador {
 	public static void main(String[] args) {
 		XmlParser xmlParser = new XmlParser();
 		NormalizadorBernstein normalizadorBernstein = new NormalizadorBernstein();
-		System.out.println("Entro");
 		normalizadorBernstein.setDominio(xmlParser.readFile("universal.xml"));
+		System.out.print("Carga de archivo con el dominio, conjunto de atributos y conjunto de dependencias funcionales");
 		System.out.println();
 		System.out.println();
 		normalizadorBernstein.imprimirAtributos();
 		normalizadorBernstein.imprimirDependenciasFuncionales();
-		
 		normalizadorBernstein.calcularDependenciasElementales(normalizadorBernstein.getDominio());
+		normalizadorBernstein.imprimirDependenciasFuncionales();
+		normalizadorBernstein.eliminarElementosExtranios(normalizadorBernstein.getDominio());
+		normalizadorBernstein.imprimirDependenciasFuncionales();
+		normalizadorBernstein.eliminarDependenciasInnecesarias(normalizadorBernstein.getDominio());
+		normalizadorBernstein.imprimirDependenciasFuncionales();
+		normalizadorBernstein.agruparPorLlave(normalizadorBernstein.getDominio());
+		normalizadorBernstein.imprimirDependenciasFuncionales();
 	}
 
 	/**

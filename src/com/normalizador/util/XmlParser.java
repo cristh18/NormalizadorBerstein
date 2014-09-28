@@ -120,7 +120,9 @@ public class XmlParser implements IFileParser {
 				List dfs = df.getChildren();
 
 				for (int l = 0; l < dfs.size(); l++) {
-					
+
+					List<Atributo> listAtributosDeterminantes = new ArrayList<Atributo>();
+					List<Atributo> listAtributosImplicados = new ArrayList<Atributo>();
 					cadenaDeterminante = new StringBuilder();
 					cadenaImplicado = new StringBuilder();
 					conjuntoAtributosDet = "";
@@ -137,14 +139,18 @@ public class XmlParser implements IFileParser {
 
 						List det = y.getChildren();
 
-						System.out.println("Determinantes");
+						// System.out.println("Determinantes");
 						for (int n = 0; n < det.size(); n++) {
 							Element q = (Element) det.get(n);
 							z = q.getTextTrim();
-							System.out.println(z);
+//							System.out.println(z);
+							
+							Atributo atr = new Atributo();
+							atr.setValor(z);
+							listAtributosDeterminantes.add(atr);
 							cadenaDeterminante.append(z);
 						}
-						System.out.println(cadenaDeterminante);
+//						System.out.println(cadenaDeterminante);
 
 					}
 
@@ -153,14 +159,18 @@ public class XmlParser implements IFileParser {
 
 						List imp = x.getChildren();
 
-						System.out.println("Implicados");
+//						System.out.println("Implicados");
 						for (int p = 0; p < imp.size(); p++) {
 							Element t = (Element) imp.get(p);
 							h = t.getTextTrim();
-							System.out.println(h);
+//							System.out.println(h);
+							
+							Atributo atr = new Atributo();
+							atr.setValor(h);
+							listAtributosImplicados.add(atr);
 							cadenaImplicado.append(h);
 						}
-						System.out.println(cadenaImplicado);
+//						System.out.println(cadenaImplicado);
 					}
 
 					dependenciaFuncional = new DependenciaFuncional();
@@ -186,12 +196,14 @@ public class XmlParser implements IFileParser {
 					Atributo atributoTemp = new Atributo();
 					atributoTemp.setValor(conjuntoAtributosDet);
 					atributosTemp1.add(atributoTemp);
-					dependenciaFuncional.setDeterminantes(atributosTemp1);
+//					dependenciaFuncional.setDeterminantes(atributosTemp1);
+					dependenciaFuncional.setDeterminantes(listAtributosDeterminantes);
 					
 					Atributo atributoTemp2 = new Atributo();
 					atributoTemp2.setValor(conjuntoAtributosImp);
 					atributosTemp2.add(atributoTemp2);
-					dependenciaFuncional.setImplicados(atributosTemp2);
+//					dependenciaFuncional.setImplicados(atributosTemp2);
+					dependenciaFuncional.setImplicados(listAtributosImplicados);
 					
 					dependenciasFuncionales.add(dependenciaFuncional);
 					dominio.setDependencias(dependenciasFuncionales);
