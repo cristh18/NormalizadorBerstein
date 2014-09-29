@@ -22,20 +22,7 @@ public class Application {
 		
 		XmlParser xmlParser = new XmlParser();
 		NormalizadorBernstein normalizadorBernstein = new NormalizadorBernstein();
-		normalizadorBernstein.setDominio(xmlParser.readFile(filePath));
-		System.out.print("Carga de archivo con el dominio, conjunto de atributos y conjunto de dependencias funcionales");
-		System.out.println();
-		System.out.println();
-		normalizadorBernstein.imprimirAtributos();
-		normalizadorBernstein.imprimirDependenciasFuncionales();
-		normalizadorBernstein.calcularDependenciasElementales(normalizadorBernstein.getDominio());
-		normalizadorBernstein.imprimirDependenciasFuncionales();
-		normalizadorBernstein.eliminarElementosExtranios(normalizadorBernstein.getDominio());
-		normalizadorBernstein.imprimirDependenciasFuncionales();
-		normalizadorBernstein.eliminarDependenciasInnecesarias(normalizadorBernstein.getDominio());
-		normalizadorBernstein.imprimirDependenciasFuncionales();
-		normalizadorBernstein.agruparPorLlave(normalizadorBernstein.getDominio());
-		normalizadorBernstein.imprimirDependenciasFuncionales();
+		normalizadorBernstein.normalizar(xmlParser.readFile(filePath));
 	}
 
 }
