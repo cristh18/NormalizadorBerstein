@@ -38,7 +38,20 @@ public class NormalizadorBernstein implements INormalizador {
 
 	@Override
 	public Esquema normalizar(Dominio dominio) {
-		// TODO Auto-generated method stub
+		this.setDominio(dominio);
+		System.out.print("Carga de archivo con el dominio, conjunto de atributos y conjunto de dependencias funcionales");
+		System.out.println();
+		System.out.println();
+		this.imprimirAtributos();
+		this.imprimirDependenciasFuncionales();
+		this.calcularDependenciasElementales(this.getDominio());
+		this.imprimirDependenciasFuncionales();
+		this.eliminarElementosExtranios(this.getDominio());
+		this.imprimirDependenciasFuncionales();
+		this.eliminarDependenciasInnecesarias(this.getDominio());
+		this.imprimirDependenciasFuncionales();
+		this.agruparPorLlave(this.getDominio());
+		this.imprimirDependenciasFuncionales();
 		return null;
 	}
 
