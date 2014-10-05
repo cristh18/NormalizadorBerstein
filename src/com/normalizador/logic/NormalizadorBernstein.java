@@ -52,6 +52,8 @@ public class NormalizadorBernstein implements INormalizador {
 		this.imprimirDependenciasFuncionales();
 		this.agruparPorLlave(this.getDominio());
 		this.imprimirDependenciasFuncionales();
+		this.hallarSuperLlave(dominio);
+		this.imprimirSubesquemas();
 		return null;
 	}
 
@@ -275,6 +277,94 @@ public class NormalizadorBernstein implements INormalizador {
 		return dominio;
 	}
 	
+	@Override
+	public Dominio hallarSuperLlave(Dominio dominio)
+	{
+		System.out.println();
+		System.out.print("Paso 5: Hallar super llave");
+		System.out.println();
+		
+		int indexAtrIzq = 0, indexAtrMid = 1, indexAtrDer = 2;
+		int intCantAtributos = dominio.getAtributos().size();
+		
+		List<List<Atributo>> listLeftMidRightTable = leftMidRightTable();
+		
+		List<Atributo> listIzq = listLeftMidRightTable.get(indexAtrIzq);
+		List<Atributo> listMid = listLeftMidRightTable.get(indexAtrMid);
+		List<Atributo> listDer = listLeftMidRightTable.get(indexAtrDer);
+		
+		List<Atributo> listTemp = new ArrayList<Atributo>();
+		listTemp.addAll(clausura(listIzq));
+		
+		if(listTemp.size() == intCantAtributos){
+			dominio.setSuperKey(listIzq);
+		}
+		else {
+			for (Atributo atributo : listMid) {
+				listTemp.clear();
+				listIzq.add(atributo);
+				listTemp.addAll(clausura(listIzq));
+				
+				if(listTemp.size() == intCantAtributos){
+					dominio.setSuperKey(listIzq);
+					break;
+				}
+				listIzq.remove(atributo);
+			}
+		}		
+		
+		System.out.print("Super llave: ");
+		for (Atributo atributo : dominio.getSuperKey()) {
+			System.out.print(atributo.getValor());
+		}
+		System.out.println();
+		return dominio;
+	}
+	
+	private List<List<Atributo>> leftMidRightTable()
+	{
+		List<List<Atributo>> listAtributos = new ArrayList<List<Atributo>>();
+		List<Atributo> listDeterminantes = new ArrayList<Atributo>();
+		List<Atributo> listImplicados = new ArrayList<Atributo>();
+		
+		List<Atributo> listIzq = new ArrayList<Atributo>();
+		List<Atributo> listMid = new ArrayList<Atributo>();
+		List<Atributo> listDer = new ArrayList<Atributo>();
+		
+		for (DependenciaFuncional df : dominio.getDependencias()) {
+			
+			for (Atributo atributo : df.getDeterminantes()) {
+				if (!listDeterminantes.contains(atributo))
+					listDeterminantes.add(atributo);
+			}
+			
+			for (Atributo atributo : df.getImplicados()) {
+				if(!listImplicados.contains(atributo))
+					listImplicados.add(atributo);
+			}
+		}
+		
+		for (Atributo atributo : listDeterminantes) {
+			if(!listImplicados.contains(atributo))
+				listIzq.add(atributo);
+			else 
+				listMid.add(atributo);
+		}
+		
+		for (Atributo atributo : listImplicados) {
+			if(!listDeterminantes.contains(atributo))
+				listDer.add(atributo);
+			else 
+				listMid.add(atributo);
+		}
+		
+		listAtributos.add(listIzq);
+		listAtributos.add(listMid);
+		listAtributos.add(listDer);
+		
+		return listAtributos;
+	}
+	
 	/**
 	 * 
 	 * @param dependenciasNoSimples
@@ -309,7 +399,7 @@ public class NormalizadorBernstein implements INormalizador {
 	/**
 	 * 
 	 */
-	public void imprimirAtributos() {
+	private void imprimirAtributos() {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("A: {");
@@ -325,7 +415,7 @@ public class NormalizadorBernstein implements INormalizador {
 	/**
 	 * 
 	 */
-	public void imprimirDependenciasFuncionales() {
+	private void imprimirDependenciasFuncionales() {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("FD: {");
@@ -346,6 +436,41 @@ public class NormalizadorBernstein implements INormalizador {
 		String cadena = sb.toString();
 		String sub = cadena.substring(0, cadena.lastIndexOf(", ")) + "}";
 		System.out.println(sub);
+	}
+	
+	private void imprimirSubesquemas(){
+		System.out.println();
+		StringBuilder sb = new StringBuilder();
+		sb.append("Subesquemas:");
+		sb.append(System.lineSeparator());
+		int count = 1;
+		for (DependenciaFuncional dependenciaFuncional : dominio.getDependencias()) {
+
+			sb.append("R" + count + "(");
+			
+			for (Atributo determinante : dependenciaFuncional.getDeterminantes()) {
+				sb.append(determinante.getValor() + ", ");
+			}
+
+			for (Atributo implicado : dependenciaFuncional.getImplicados()) {
+				sb.append(implicado.getValor() + ", ");
+			}
+			
+			sb.delete(sb.lastIndexOf(","), sb.length());
+			sb.append(") ");
+			sb.append(System.lineSeparator());
+			count++;
+		}
+		
+		sb.append("R" + count + "(");
+		for (Atributo atributo : dominio.getSuperKey()) {
+			sb.append(atributo.getValor() + ", ");
+		}
+		sb.delete(sb.lastIndexOf(","), sb.length());
+		sb.append(") ");
+		sb.append(System.lineSeparator());
+		
+		System.out.println(sb.toString());
 	}
 
 	/**

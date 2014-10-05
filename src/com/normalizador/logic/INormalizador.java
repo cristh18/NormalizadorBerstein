@@ -29,4 +29,6 @@ public interface INormalizador {
 	Dominio eliminarDependenciasInnecesarias(Dominio dominio);
 
 	Dominio agruparPorLlave(Dominio dominio);
+	
+	Dominio hallarSuperLlave(Dominio dominio);
 }

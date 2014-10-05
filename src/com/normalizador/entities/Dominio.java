@@ -13,10 +13,21 @@ public class Dominio {
 	
 	private List<DependenciaFuncional> dependencias;
 	
+	private List<Atributo> superKey;
+	
 	public Dominio() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public List<Atributo> getSuperKey()
+	{
+		return superKey;
+	}
+	
+	public void setSuperKey(List<Atributo> superKey){
+		this.superKey = superKey;
+	}
+	
 	/**
 	 * @return the atributos
 	 */
