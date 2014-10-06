@@ -239,7 +239,7 @@ public class NormalizadorGUI extends JFrame{
 		
 		jlblEtiAgrupamiento = new JLabel("4. Agrupar dependencias por llave");
 		jlblEtiAgrupamiento.setForeground(Color.BLUE);
-		jlblEtiAgrupamiento.setBounds(10, 345, 600, 25);
+		jlblEtiAgrupamiento.setBounds(10, 365, 600, 25);
 		panelResultados.add(jlblEtiAgrupamiento);
 
 		jlblAgrupamiento = new JTextArea();
