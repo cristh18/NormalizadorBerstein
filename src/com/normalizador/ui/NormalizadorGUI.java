@@ -148,7 +148,7 @@ public class NormalizadorGUI extends JFrame{
 		add(panelBotones);
 		
 		
-		jbtnCargar = new JButton("Abrir");
+		jbtnCargar = new JButton("Cargar Archivo");
 		jbtnCargar.setFont( new Font( "Calibri (Cuerpo)", Font.BOLD, 12));
 		jbtnCargar.setBackground(new Color(0,86,84));
 		jbtnCargar.setForeground(new Color(255,153,0));
