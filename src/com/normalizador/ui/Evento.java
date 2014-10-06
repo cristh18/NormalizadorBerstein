@@ -8,6 +8,11 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+/**
+ * 
+ * @author Cristhian
+ *
+ */
 public class Evento implements ActionListener, KeyListener {
 
 	private NormalizadorGUI normalizadorGUI;
@@ -31,19 +36,19 @@ public class Evento implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 
 	}
 

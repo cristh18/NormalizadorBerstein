@@ -16,6 +16,11 @@ import javax.swing.border.TitledBorder;
 import com.normalizador.logic.NormalizadorBernstein;
 import com.normalizador.util.XmlParser;
 
+/**
+ * 
+ * @author Cristhian
+ *
+ */
 public class NormalizadorGUI extends JFrame{
 
 	/**
@@ -180,8 +185,6 @@ public class NormalizadorGUI extends JFrame{
 		
 		jlblAtributos = new JTextArea();
 		jlblAtributos.setEditable(false);
-//		jlblAtributos.setBounds(110, 25, 600, 25);
-//		panelResultados.add(jlblAtributos);
 		
 		JScrollPane scrollAtributos = new JScrollPane (jlblAtributos);
 		scrollAtributos.setBounds(110, 25, 600, 45);		
@@ -194,8 +197,6 @@ public class NormalizadorGUI extends JFrame{
 		
 		jlblDependencias = new JTextArea();
 		jlblDependencias.setEditable(false);
-//		jlblDependencias.setBounds(110, 55, 600, 25);
-//		panelResultados.add(jlblDependencias);
 		
 		JScrollPane scrollDependencias = new JScrollPane (jlblDependencias);
 		scrollDependencias.setBounds(110, 75, 600, 45);		
