@@ -1,0 +1,143 @@
+<root>
+	<attributes>
+		<!-- Cliente -->
+		<attribute>idCliente</attribute>
+		<attribute>tipoIdentificacion</attribute>
+		<attribute>numeroIdentificacion</attribute>
+		<attribute>estadoCivil</attribute>
+		<attribute>primerNombre</attribute>
+		<attribute>segundoNombre</attribute>
+		<attribute>primerApellido</attribute>
+		<attribute>segundoApellido</attribute>
+		<attribute>fechaNacimiento</attribute>
+		<attribute>estadoCliente</attribute>
+		<!-- Datos contacto -->
+		<attribute>idContacto</attribute>
+		<attribute>direccion</attribute>
+		<attribute>barrio</attribute>
+		<attribute>codigoZona</attribute>
+		<attribute>ciudadID</attribute>
+		<attribute>area</attribute>
+		<attribute>telefono</attribute>
+		<attribute>extension</attribute>
+		<attribute>celular</attribute>
+		<attribute>email</attribute>
+		<!-- Vinculacion -->
+		<attribute>idVinculacion</attribute>
+		<attribute>fechaIngresoEmpresa</attribute>
+		<attribute>fechaVinculacion</attribute>
+		<attribute>fechaInicioVigenciaVinculacion</attribute>
+		<attribute>estadoVinculacion</attribute>
+		<attribute>fechaRetiroVinculacion</attribute>
+		<attribute>causalRetiroVinculacion</attribute>
+		<attribute>salario</attribute>
+		<attribute>estrato</attribute>
+		<!-- Dato adicional -->
+		<attribute>idDatoAdicional</attribute>
+		<attribute>valor</attribute>
+		<attribute>fechaInicioVigenciaDatoAdicional</attribute>
+		<attribute>fechaFinVigenciaDatoAdicional</attribute>
+		<!-- Estado Civil -->
+		<attribute>idEstadoCivil</attribute>
+		<attribute>descripcionEstadoCivil</attribute>
+		<!-- Ciudad -->
+		<attribute>idCiudad</attribute>
+		<attribute>descripcionCiudad</attribute>
+		<!-- Departamento -->
+		<attribute>idDepartamento</attribute>
+		<attribute>descripcionDepartamento</attribute>
+		<!-- Programa Vinculacion -->
+		<attribute>idProgramaVinculacion</attribute>
+		<attribute>decripcionVinculacion</attribute>
+	</attributes>
+	<fds>
+		<!-- Cliente -->
+		<fd>
+			<left>
+				<attribute>idCliente</attribute>
+				
+			</left>
+			<right>
+				<attribute>tipoIdentificacion</attribute>
+				<attribute>numeroIdentificacion</attribute>
+				<attribute>estadoCivil</attribute>
+				<attribute>primerNombre</attribute>
+				<attribute>segundoNombre</attribute>
+				<attribute>primerApellido</attribute>
+				<attribute>segundoApellido</attribute>
+				<attribute>fechaNacimiento</attribute>
+				<attribute>estadoCliente</attribute>
+			</right>
+		</fd>
+		<!-- Contacto -->
+		<fd>
+			<left>
+				<attribute>idContacto</attribute>
+			</left>
+			<right>
+				<attribute>direccion</attribute>
+				<attribute>barrio</attribute>
+				<attribute>codigoZona</attribute>
+				<attribute>ciudadID</attribute>
+				<attribute>area</attribute>
+				<attribute>telefono</attribute>
+				<attribute>extension</attribute>
+				<attribute>celular</attribute>
+				<attribute>email</attribute>
+			</right>
+		</fd>
+		<!-- Vinculacion -->
+		<fd>
+			<left>
+				<attribute>idVinculacion</attribute>
+			</left>
+			<right>
+				<attribute>fechaIngresoEmpresa</attribute>
+				<attribute>fechaVinculacion</attribute>
+				<attribute>fechaInicioVigenciaVinculacion</attribute>
+				<attribute>estadoVinculacion</attribute>
+				<attribute>fechaRetiroVinculacion</attribute>
+				<attribute>causalRetiroVinculacion</attribute>
+				<attribute>salario</attribute>
+				<attribute>estrato</attribute>
+			</right>
+		</fd>
+		<!-- Dato adicional -->
+		<fd>
+			<left>
+				<attribute>idDatoAdicional</attribute>
+			</left>
+			<right>
+				<attribute>valor</attribute>
+				<attribute>fechaInicioVigenciaDatoAdicional</attribute>
+				<attribute>fechaFinVigenciaDatoAdicional</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>idEstadoCivil</attribute>
+			</left>
+			<right>
+				<attribute>descripcionEstadoCivil</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>idCiudad</attribute>
+				<attribute>descripcionCiudad</attribute>
+			</left>
+			<right>
+				<attribute>idDepartamento</attribute>
+				<attribute>descripcionDepartamento</attribute>
+			</right>
+		</fd>
+		<fd>
+			<left>
+				<attribute>idProgramaVinculacion</attribute>
+			</left>
+			<right>
+				<attribute>decripcionVinculacion</attribute>
+			</right>
+		</fd>
+	</fds>
+</root>
