@@ -151,8 +151,8 @@ public class NormalizadorBernstein implements INormalizador {
 			//Vaciar lista dependencias funcionales a eliminar
 			listDependenciasEliminar.clear();
 			
-			if(listAtributosClausura.size() == dominio.getAtributos().size())
-				break;
+			/*if(listAtributosClausura.size() == dominio.getAtributos().size())
+				break;*/
 			
 		} while (cantidadInicial != cantidadFinal /*|| listDependenciasFuncionales.size() > 0 || */);
 
@@ -305,7 +305,7 @@ public class NormalizadorBernstein implements INormalizador {
 				listIzq.add(atributo);
 				listTemp.addAll(clausura(listIzq));
 				
-				if(listTemp.size() == intCantAtributos){
+				if(listTemp.containsAll(dominio.getAtributos())){
 					dominio.setSuperKey(listIzq);
 					break;
 				}
