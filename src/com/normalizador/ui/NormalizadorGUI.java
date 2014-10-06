@@ -9,6 +9,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 import com.normalizador.logic.NormalizadorBernstein;
@@ -76,7 +78,7 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblDepElementale;
+	private JTextArea jlblDepElementale;
 	
 	/**
 	 * 
@@ -86,7 +88,7 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblAtrExtranios;
+	private JTextArea jlblAtrExtranios;
 	
 	/**
 	 * 
@@ -96,7 +98,7 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblDepInnecesarias;
+	private JTextArea jlblDepInnecesarias;
 	
 	/**
 	 * 
@@ -106,7 +108,7 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblAgrupamiento;
+	private JTextArea jlblAgrupamiento;
 	
 	/**
 	 * 
@@ -116,7 +118,7 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblSuperLLave;
+	private JTextArea jlblSuperLLave;
 	
 	/**
 	 * 
@@ -126,12 +128,12 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblSubesquemas;
+	private JTextArea jlblSubesquemas;
 	
 	public NormalizadorGUI() {
 		evento = new Evento(this);
 		
-		setSize(1000, 620);
+		setSize(1000, 720);
 		setTitle("Normalizador Bernstein");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -140,10 +142,10 @@ public class NormalizadorGUI extends JFrame{
 		
 		
 		panelBotones = new JPanel();
-		panelBotones.setSize(1000, 620);		
+		panelBotones.setSize(1000, 720);		
 		TitledBorder titulo = new TitledBorder("Cargar XML");
 		panelBotones.setBorder(titulo);
-		panelBotones.setBounds(0, 0, 994, 578);
+		panelBotones.setBounds(0, 0, 994, 678);
 		panelBotones.setLayout(new FlowLayout());
 		add(panelBotones);
 		
@@ -159,10 +161,10 @@ public class NormalizadorGUI extends JFrame{
 		abrirArchivo=new JFileChooser();
 		
 		panelResultados = new JPanel();
-		panelResultados.setSize(1000, 620);		
+		panelResultados.setSize(1000, 720);		
 		TitledBorder tituloResultados = new TitledBorder("Resultado de la Normalización");
 		panelResultados.setBorder(titulo);
-		panelResultados.setBounds(0, 0, 994, 578);
+		panelResultados.setBounds(0, 0, 994, 678);
 		panelResultados.setBorder(tituloResultados);
 		panelResultados.setLayout(null);
 		panelResultados.setVisible(false);
@@ -191,55 +193,73 @@ public class NormalizadorGUI extends JFrame{
 		jlblEtiDepElementales.setForeground(Color.BLUE);
 		jlblEtiDepElementales.setBounds(10, 85, 600, 25);
 		panelResultados.add(jlblEtiDepElementales);
+				
+		jlblDepElementale = new JTextArea();
+		jlblDepElementale.setEditable(false);
 		
-		jlblDepElementale = new JLabel();
-		jlblDepElementale.setBounds(10, 115, 900, 25);
-		panelResultados.add(jlblDepElementale);
+		JScrollPane scrollDepElementale = new JScrollPane (jlblDepElementale);
+		scrollDepElementale.setBounds(10, 115, 900, 45);		
+		panelResultados.add(scrollDepElementale);
 		
 		jlblEtiAtrExtranios = new JLabel("2. Eliminar elementos extraños");
 		jlblEtiAtrExtranios.setForeground(Color.BLUE);
-		jlblEtiAtrExtranios.setBounds(10, 145, 600, 25);
+		jlblEtiAtrExtranios.setBounds(10, 165, 600, 25);
 		panelResultados.add(jlblEtiAtrExtranios);
+
+		jlblAtrExtranios = new JTextArea();
+		jlblAtrExtranios.setEditable(false);
 		
-		jlblAtrExtranios = new JLabel();
-		jlblAtrExtranios.setBounds(10, 175, 900, 25);
-		panelResultados.add(jlblAtrExtranios);
+		JScrollPane scrollAtrExtranios = new JScrollPane (jlblAtrExtranios);
+		scrollAtrExtranios.setBounds(10, 195, 900, 45);		
+		panelResultados.add(scrollAtrExtranios);
 		
 		jlblEtiDepInnecesarias = new JLabel("3. Eliminar dependencias innecesarias");
 		jlblEtiDepInnecesarias.setForeground(Color.BLUE);
-		jlblEtiDepInnecesarias.setBounds(10, 205, 600, 25);
+		jlblEtiDepInnecesarias.setBounds(10, 245, 600, 25);
 		panelResultados.add(jlblEtiDepInnecesarias);
 		
-		jlblDepInnecesarias = new JLabel();
-		jlblDepInnecesarias.setBounds(10, 235, 900, 25);
-		panelResultados.add(jlblDepInnecesarias);
+		jlblDepInnecesarias = new JTextArea();
+		jlblDepInnecesarias.setEditable(false);
+		
+		JScrollPane scrollDepInnecesarias = new JScrollPane (jlblDepInnecesarias);
+		scrollDepInnecesarias.setBounds(10, 275, 900, 45);		
+		panelResultados.add(scrollDepInnecesarias);
 		
 		jlblEtiAgrupamiento = new JLabel("4. Agrupar dependencias por llave");
 		jlblEtiAgrupamiento.setForeground(Color.BLUE);
-		jlblEtiAgrupamiento.setBounds(10, 265, 600, 25);
+		jlblEtiAgrupamiento.setBounds(10, 325, 600, 25);
 		panelResultados.add(jlblEtiAgrupamiento);
+
+		jlblAgrupamiento = new JTextArea();
+		jlblAgrupamiento.setEditable(false);
 		
-		jlblAgrupamiento = new JLabel();
-		jlblAgrupamiento.setBounds(10, 295, 900, 25);
-		panelResultados.add(jlblAgrupamiento);
-		
+		JScrollPane scrollAgrupamiento = new JScrollPane (jlblAgrupamiento);
+		scrollAgrupamiento.setBounds(10, 355, 900, 45);		
+		panelResultados.add(scrollAgrupamiento);
+
 		jlblEtiSuperLLave = new JLabel("5. Super llave");
 		jlblEtiSuperLLave.setForeground(Color.BLUE);
-		jlblEtiSuperLLave.setBounds(10, 325, 600, 25);
+		jlblEtiSuperLLave.setBounds(10, 405, 600, 25);
 		panelResultados.add(jlblEtiSuperLLave);
-		
-		jlblSuperLLave = new JLabel();
-		jlblSuperLLave.setBounds(10, 355, 900, 25);
-		panelResultados.add(jlblSuperLLave);
+
+		jlblSuperLLave = new JTextArea();
+		jlblSuperLLave.setEditable(false);
+				
+		JScrollPane scrollSuperLLave = new JScrollPane (jlblSuperLLave);
+		scrollSuperLLave.setBounds(10, 435, 900, 45);		
+		panelResultados.add(scrollSuperLLave);
 		
 		jlblEtiSubesquemas = new JLabel("SubEsquemas");	
 		jlblEtiSubesquemas.setForeground(Color.BLUE);
-		jlblEtiSubesquemas.setBounds(10, 385, 600, 25);
+		jlblEtiSubesquemas.setBounds(10, 485, 600, 25);
 		panelResultados.add(jlblEtiSubesquemas);
+
+		jlblSubesquemas = new JTextArea();
+		jlblSubesquemas.setEditable(false);
 		
-		jlblSubesquemas = new JLabel();
-		jlblSubesquemas.setBounds(10, 415, 900, 25);
-		panelResultados.add(jlblSubesquemas);
+		JScrollPane scrollSubesquemas = new JScrollPane (jlblSubesquemas);
+		scrollSubesquemas.setBounds(10, 515, 900, 160);		
+		panelResultados.add(scrollSubesquemas);
 	}
 	
 	public void ejecutarNormalizacion() {
@@ -406,14 +426,14 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * @return the jlblDepElementale
 	 */
-	public JLabel getJlblDepElementale() {
+	public JTextArea getJlblDepElementale() {
 		return jlblDepElementale;
 	}
 
 	/**
 	 * @param jlblDepElementale the jlblDepElementale to set
 	 */
-	public void setJlblDepElementale(JLabel jlblDepElementale) {
+	public void setJlblDepElementale(JTextArea jlblDepElementale) {
 		this.jlblDepElementale = jlblDepElementale;
 	}
 
@@ -434,14 +454,14 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * @return the jlblAtrExtranios
 	 */
-	public JLabel getJlblAtrExtranios() {
+	public JTextArea getJlblAtrExtranios() {
 		return jlblAtrExtranios;
 	}
 
 	/**
 	 * @param jlblAtrExtranios the jlblAtrExtranios to set
 	 */
-	public void setJlblAtrExtranios(JLabel jlblAtrExtranios) {
+	public void setJlblAtrExtranios(JTextArea jlblAtrExtranios) {
 		this.jlblAtrExtranios = jlblAtrExtranios;
 	}
 
@@ -462,14 +482,14 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * @return the jlblDepInnecesarias
 	 */
-	public JLabel getJlblDepInnecesarias() {
+	public JTextArea getJlblDepInnecesarias() {
 		return jlblDepInnecesarias;
 	}
 
 	/**
 	 * @param jlblDepInnecesarias the jlblDepInnecesarias to set
 	 */
-	public void setJlblDepInnecesarias(JLabel jlblDepInnecesarias) {
+	public void setJlblDepInnecesarias(JTextArea jlblDepInnecesarias) {
 		this.jlblDepInnecesarias = jlblDepInnecesarias;
 	}
 
@@ -490,14 +510,14 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * @return the jlblAgrupamiento
 	 */
-	public JLabel getJlblAgrupamiento() {
+	public JTextArea getJlblAgrupamiento() {
 		return jlblAgrupamiento;
 	}
 
 	/**
 	 * @param jlblAgrupamiento the jlblAgrupamiento to set
 	 */
-	public void setJlblAgrupamiento(JLabel jlblAgrupamiento) {
+	public void setJlblAgrupamiento(JTextArea jlblAgrupamiento) {
 		this.jlblAgrupamiento = jlblAgrupamiento;
 	}
 
@@ -518,14 +538,14 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * @return the jlblSuperLLave
 	 */
-	public JLabel getJlblSuperLLave() {
+	public JTextArea getJlblSuperLLave() {
 		return jlblSuperLLave;
 	}
 
 	/**
 	 * @param jlblSuperLLave the jlblSuperLLave to set
 	 */
-	public void setJlblSuperLLave(JLabel jlblSuperLLave) {
+	public void setJlblSuperLLave(JTextArea jlblSuperLLave) {
 		this.jlblSuperLLave = jlblSuperLLave;
 	}
 
@@ -537,11 +557,11 @@ public class NormalizadorGUI extends JFrame{
 		this.jlblEtiSubesquemas = jlblEtiSubesquemas;
 	}
 
-	public JLabel getJlblSubesquemas() {
+	public JTextArea getJlblSubesquemas() {
 		return jlblSubesquemas;
 	}
 
-	public void setJlblSubesquemas(JLabel jlblSubesquemas) {
+	public void setJlblSubesquemas(JTextArea jlblSubesquemas) {
 		this.jlblSubesquemas = jlblSubesquemas;
 	}
 
