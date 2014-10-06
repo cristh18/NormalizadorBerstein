@@ -58,7 +58,7 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblAtributos;
+	private JTextArea jlblAtributos;
 	
 	/**
 	 * 
@@ -68,7 +68,7 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * 
 	 */
-	private JLabel jlblDependencias;
+	private JTextArea jlblDependencias;
 	
 	/**
 	 * 
@@ -130,6 +130,8 @@ public class NormalizadorGUI extends JFrame{
 	 */
 	private JTextArea jlblSubesquemas;
 	
+	private JButton jbtnAtras;
+	
 	public NormalizadorGUI() {
 		evento = new Evento(this);
 		
@@ -176,90 +178,109 @@ public class NormalizadorGUI extends JFrame{
 		jlblEtiAtributos.setBounds(10, 25, 100, 25);
 		panelResultados.add(jlblEtiAtributos);	
 		
-		jlblAtributos = new JLabel();
-		jlblAtributos.setBounds(110, 25, 600, 25);
-		panelResultados.add(jlblAtributos);
+		jlblAtributos = new JTextArea();
+		jlblAtributos.setEditable(false);
+//		jlblAtributos.setBounds(110, 25, 600, 25);
+//		panelResultados.add(jlblAtributos);
+		
+		JScrollPane scrollAtributos = new JScrollPane (jlblAtributos);
+		scrollAtributos.setBounds(110, 25, 600, 45);		
+		panelResultados.add(scrollAtributos);
 		
 		jlblEtiDependencias = new JLabel("Dependencias: ");
 		jlblEtiDependencias.setForeground(Color.BLUE);
-		jlblEtiDependencias.setBounds(10, 55, 100, 25);
+		jlblEtiDependencias.setBounds(10, 75, 100, 25);
 		panelResultados.add(jlblEtiDependencias);
 		
-		jlblDependencias = new JLabel();
-		jlblDependencias.setBounds(110, 55, 600, 25);
-		panelResultados.add(jlblDependencias);
+		jlblDependencias = new JTextArea();
+		jlblDependencias.setEditable(false);
+//		jlblDependencias.setBounds(110, 55, 600, 25);
+//		panelResultados.add(jlblDependencias);
+		
+		JScrollPane scrollDependencias = new JScrollPane (jlblDependencias);
+		scrollDependencias.setBounds(110, 75, 600, 45);		
+		panelResultados.add(scrollDependencias);
 		
 		jlblEtiDepElementales = new JLabel("1. Calculo de dependencias elementales");
 		jlblEtiDepElementales.setForeground(Color.BLUE);
-		jlblEtiDepElementales.setBounds(10, 85, 600, 25);
+		jlblEtiDepElementales.setBounds(10, 125, 600, 25);
 		panelResultados.add(jlblEtiDepElementales);
 				
 		jlblDepElementale = new JTextArea();
 		jlblDepElementale.setEditable(false);
 		
 		JScrollPane scrollDepElementale = new JScrollPane (jlblDepElementale);
-		scrollDepElementale.setBounds(10, 115, 900, 45);		
+		scrollDepElementale.setBounds(10, 155, 900, 45);		
 		panelResultados.add(scrollDepElementale);
 		
 		jlblEtiAtrExtranios = new JLabel("2. Eliminar elementos extraños");
 		jlblEtiAtrExtranios.setForeground(Color.BLUE);
-		jlblEtiAtrExtranios.setBounds(10, 165, 600, 25);
+		jlblEtiAtrExtranios.setBounds(10, 205, 600, 25);
 		panelResultados.add(jlblEtiAtrExtranios);
 
 		jlblAtrExtranios = new JTextArea();
 		jlblAtrExtranios.setEditable(false);
 		
 		JScrollPane scrollAtrExtranios = new JScrollPane (jlblAtrExtranios);
-		scrollAtrExtranios.setBounds(10, 195, 900, 45);		
+		scrollAtrExtranios.setBounds(10, 235, 900, 45);		
 		panelResultados.add(scrollAtrExtranios);
 		
 		jlblEtiDepInnecesarias = new JLabel("3. Eliminar dependencias innecesarias");
 		jlblEtiDepInnecesarias.setForeground(Color.BLUE);
-		jlblEtiDepInnecesarias.setBounds(10, 245, 600, 25);
+		jlblEtiDepInnecesarias.setBounds(10, 285, 600, 25);
 		panelResultados.add(jlblEtiDepInnecesarias);
 		
 		jlblDepInnecesarias = new JTextArea();
 		jlblDepInnecesarias.setEditable(false);
 		
 		JScrollPane scrollDepInnecesarias = new JScrollPane (jlblDepInnecesarias);
-		scrollDepInnecesarias.setBounds(10, 275, 900, 45);		
+		scrollDepInnecesarias.setBounds(10, 315, 900, 45);		
 		panelResultados.add(scrollDepInnecesarias);
 		
 		jlblEtiAgrupamiento = new JLabel("4. Agrupar dependencias por llave");
 		jlblEtiAgrupamiento.setForeground(Color.BLUE);
-		jlblEtiAgrupamiento.setBounds(10, 325, 600, 25);
+		jlblEtiAgrupamiento.setBounds(10, 345, 600, 25);
 		panelResultados.add(jlblEtiAgrupamiento);
 
 		jlblAgrupamiento = new JTextArea();
 		jlblAgrupamiento.setEditable(false);
 		
 		JScrollPane scrollAgrupamiento = new JScrollPane (jlblAgrupamiento);
-		scrollAgrupamiento.setBounds(10, 355, 900, 45);		
+		scrollAgrupamiento.setBounds(10, 395, 900, 45);		
 		panelResultados.add(scrollAgrupamiento);
 
 		jlblEtiSuperLLave = new JLabel("5. Super llave");
 		jlblEtiSuperLLave.setForeground(Color.BLUE);
-		jlblEtiSuperLLave.setBounds(10, 405, 600, 25);
+		jlblEtiSuperLLave.setBounds(10, 445, 600, 25);
 		panelResultados.add(jlblEtiSuperLLave);
 
 		jlblSuperLLave = new JTextArea();
 		jlblSuperLLave.setEditable(false);
 				
 		JScrollPane scrollSuperLLave = new JScrollPane (jlblSuperLLave);
-		scrollSuperLLave.setBounds(10, 435, 900, 45);		
+		scrollSuperLLave.setBounds(10, 475, 900, 45);		
 		panelResultados.add(scrollSuperLLave);
 		
 		jlblEtiSubesquemas = new JLabel("SubEsquemas");	
 		jlblEtiSubesquemas.setForeground(Color.BLUE);
-		jlblEtiSubesquemas.setBounds(10, 485, 600, 25);
+		jlblEtiSubesquemas.setBounds(10, 525, 600, 25);
 		panelResultados.add(jlblEtiSubesquemas);
 
 		jlblSubesquemas = new JTextArea();
 		jlblSubesquemas.setEditable(false);
 		
 		JScrollPane scrollSubesquemas = new JScrollPane (jlblSubesquemas);
-		scrollSubesquemas.setBounds(10, 515, 900, 160);		
+		scrollSubesquemas.setBounds(10, 555, 900, 70);		
 		panelResultados.add(scrollSubesquemas);
+		
+		jbtnAtras = new JButton("Regresar");
+		jbtnAtras.setFont( new Font( "Calibri (Cuerpo)", Font.BOLD, 12));
+		jbtnAtras.setBackground(new Color(0,86,84));
+		jbtnAtras.setForeground(new Color(255,153,0));
+		jbtnAtras.setBounds(430, 640, 100, 30);
+		jbtnAtras.addActionListener(this.getEvento());
+		jbtnAtras.setActionCommand(Evento.ACCION_VOLVER);
+		panelResultados.add(jbtnAtras);
 	}
 	
 	public void ejecutarNormalizacion() {
@@ -281,6 +302,11 @@ public class NormalizadorGUI extends JFrame{
 		
 		panelBotones.setVisible(false);
 		panelResultados.setVisible(true);
+	}
+	
+	public void volver(){
+		panelBotones.setVisible(true);
+		panelResultados.setVisible(false);
 	}
 
 	/**
@@ -370,14 +396,14 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * @return the jlblAtributos
 	 */
-	public JLabel getJlblAtributos() {
+	public JTextArea getJlblAtributos() {
 		return jlblAtributos;
 	}
 
 	/**
 	 * @param jlblAtributos the jlblAtributos to set
 	 */
-	public void setJlblAtributos(JLabel jlblAtributos) {
+	public void setJlblAtributos(JTextArea jlblAtributos) {
 		this.jlblAtributos = jlblAtributos;
 	}
 
@@ -398,14 +424,14 @@ public class NormalizadorGUI extends JFrame{
 	/**
 	 * @return the jlblDependencias
 	 */
-	public JLabel getJlblDependencias() {
+	public JTextArea getJlblDependencias() {
 		return jlblDependencias;
 	}
 
 	/**
 	 * @param jlblDependencias the jlblDependencias to set
 	 */
-	public void setJlblDependencias(JLabel jlblDependencias) {
+	public void setJlblDependencias(JTextArea jlblDependencias) {
 		this.jlblDependencias = jlblDependencias;
 	}
 
@@ -563,6 +589,14 @@ public class NormalizadorGUI extends JFrame{
 
 	public void setJlblSubesquemas(JTextArea jlblSubesquemas) {
 		this.jlblSubesquemas = jlblSubesquemas;
+	}
+
+	public JButton getJbtnAtras() {
+		return jbtnAtras;
+	}
+
+	public void setJbtnAtras(JButton jbtnAtras) {
+		this.jbtnAtras = jbtnAtras;
 	}
 
 	

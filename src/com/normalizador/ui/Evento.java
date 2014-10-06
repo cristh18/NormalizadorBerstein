@@ -15,9 +15,14 @@ public class Evento implements ActionListener, KeyListener {
 	private String ruta;
 
 	/**
-	 * Constante que maneja el evento de crear usuario
+	 * Constante que maneja el evento de cargar xml
 	 */
 	public static final String ACCION_CARGAR_XML = "cargar xml";
+	
+	/**
+	 * Constante que maneja el evento de volver
+	 */
+	public static final String ACCION_VOLVER = "volver";
 
 	public Evento(NormalizadorGUI normalizadorGUI) {
 		this.normalizadorGUI = normalizadorGUI;
@@ -61,6 +66,8 @@ public class Evento implements ActionListener, KeyListener {
 			File abre = normalizadorGUI.getAbrirArchivo().getSelectedFile();
 			ruta = abre.getAbsolutePath();
 			normalizadorGUI.ejecutarNormalizacion();
+		}else if (accion.equals(ACCION_VOLVER)) {
+			normalizadorGUI.volver();
 		}
 
 	}
