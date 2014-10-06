@@ -7,7 +7,6 @@ import com.normalizador.entities.Atributo;
 import com.normalizador.entities.DependenciaFuncional;
 import com.normalizador.entities.Dominio;
 import com.normalizador.entities.Esquema;
-import com.normalizador.util.XmlParser;
 
 /**
  * 
@@ -31,6 +30,7 @@ public class NormalizadorBernstein implements INormalizador {
 	 * Default constructor
 	 */
 	public NormalizadorBernstein() {
+		contador = 0;
 		l1 = new ArrayList<DependenciaFuncional>();
 		l1Temp = new ArrayList<DependenciaFuncional>();
 		l1TempAxiomatizada = new ArrayList<DependenciaFuncional>();
@@ -314,9 +314,12 @@ public class NormalizadorBernstein implements INormalizador {
 		}		
 		
 		System.out.print("Super llave: ");
+		String sp = "";
 		for (Atributo atributo : dominio.getSuperKey()) {
 			System.out.print(atributo.getValor());
+			sp = sp + atributo.getValor();
 		}
+		superLlave = sp;
 		System.out.println();
 		return dominio;
 	}
@@ -410,6 +413,7 @@ public class NormalizadorBernstein implements INormalizador {
 		String cadena = sb.toString();
 		String sub = cadena.substring(0, cadena.lastIndexOf(", ")) + "}";
 		System.out.println(sub);
+		atributos = sub;
 	}
 
 	/**
@@ -436,6 +440,20 @@ public class NormalizadorBernstein implements INormalizador {
 		String cadena = sb.toString();
 		String sub = cadena.substring(0, cadena.lastIndexOf(", ")) + "}";
 		System.out.println(sub);
+		contador++;
+		
+		if (contador == 1) {
+			dependenciasFuncionales = sub;
+		} else if (contador == 2) {
+			dependenciasElementales = sub;
+		} else if (contador == 3) {
+			depSinExtranios = sub;
+		} else if (contador == 4) {
+			depNoRedundantes = sub;
+		}else if (contador == 5) {
+			agruparPorLlave = sub;
+		}
+		
 	}
 	
 	private void imprimirSubesquemas(){
@@ -469,8 +487,9 @@ public class NormalizadorBernstein implements INormalizador {
 		sb.delete(sb.lastIndexOf(","), sb.length());
 		sb.append(") ");
 		sb.append(System.lineSeparator());
-		
-		System.out.println(sb.toString());
+				
+		subesquemas = sb.toString();
+		System.out.println(subesquemas);
 	}
 
 	/**
@@ -530,5 +549,96 @@ public class NormalizadorBernstein implements INormalizador {
 	}
 
 
+	private String atributos;
+	
+	private String dependenciasFuncionales;
+	
+	private String dependenciasElementales;
+	
+	private String depSinExtranios;
+	
+	private String depNoRedundantes;
+	
+	private String agruparPorLlave;
+	
+	private String superLlave;
+	
+	private String subesquemas;
+	
+	private int contador;
+	
+	public String getAtributos() {
+		return atributos;
+	}
+	
+	public void setAtributos(String atributos) {
+		this.atributos = atributos;
+	}
+	
+	public String getDependenciasFuncionales() {
+		return dependenciasFuncionales;
+	}
 
+	public void setDependenciasFuncionales(String dependenciasFuncionales) {
+		this.dependenciasFuncionales = dependenciasFuncionales;
+	}
+
+	public int getContador() {
+		return contador;
+	}
+
+	public void setContador(int contador) {
+		this.contador = contador;
+	}
+
+	public String getDependenciasElementales() {
+		return dependenciasElementales;
+	}
+
+	public void setDependenciasElementales(String dependenciasElementales) {
+		this.dependenciasElementales = dependenciasElementales;
+	}
+
+	public String getDepSinExtranios() {
+		return depSinExtranios;
+	}
+
+	public void setDepSinExtranios(String depSinExtranios) {
+		this.depSinExtranios = depSinExtranios;
+	}
+
+	public String getDepNoRedundantes() {
+		return depNoRedundantes;
+	}
+
+	public void setDepNoRedundantes(String depNoRedundantes) {
+		this.depNoRedundantes = depNoRedundantes;
+	}
+
+	public String getAgruparPorLlave() {
+		return agruparPorLlave;
+	}
+
+	public void setAgruparPorLlave(String agruparPorLlave) {
+		this.agruparPorLlave = agruparPorLlave;
+	}
+
+	public String getSuperLlave() {
+		return superLlave;
+	}
+
+	public void setSuperLlave(String superLlave) {
+		this.superLlave = superLlave;
+	}
+
+	public String getSubesquemas() {
+		return subesquemas;
+	}
+
+	public void setSubesquemas(String subesquemas) {
+		this.subesquemas = subesquemas;
+	}
+
+
+	
 }
